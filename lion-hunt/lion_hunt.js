@@ -11,9 +11,12 @@ const testCase6 = "L ZZ L "; //Output: 1;
 const testCase7 = "Z  Z  Z"; //Output: -1;
 const testCase8 = " LZ"; //Output: 0;
 const testCase9 = "   L Z    LZ"; //Output: 0;
+const testCase10 = "L  L Z"; //Output: 1;
+const testCase11 = "Z  Z L Z Z   ZL"; //Output: 0;
+const testCase12 = "Z    Z   L Z LL ZZ  LZ"; //Output: 0;
 
 
-const testCaseToUse = testCase9;
+const testCaseToUse = testCase12;
 
 // Write your code here:
 let leastDistance = 101;
@@ -40,6 +43,8 @@ for(currentIndex = 1; currentIndex < testCaseToUse.length; currentIndex++){
             leastDistance = leastDistance > currentDistance ? currentDistance : leastDistance;
             targetAnimal = zebra;
             targetAnimalIndex = currentIndex;            
+        } else if(testCaseToUse[currentIndex] === lion) {
+            targetAnimalIndex = currentIndex;
         }
     } else if(targetAnimal === zebra){
 
@@ -47,6 +52,8 @@ for(currentIndex = 1; currentIndex < testCaseToUse.length; currentIndex++){
             currentDistance = currentIndex - targetAnimalIndex - 1;
             leastDistance = leastDistance > currentDistance ? currentDistance : leastDistance;
             targetAnimal = lion;
+            targetAnimalIndex = currentIndex;
+        } else if(testCaseToUse[currentIndex] === zebra) {
             targetAnimalIndex = currentIndex;
         }
     } else {
