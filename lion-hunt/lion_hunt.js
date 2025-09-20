@@ -16,53 +16,58 @@ const testCase11 = "Z  Z L Z Z   ZL"; //Output: 0;
 const testCase12 = "Z    Z   L Z LL ZZ  LZ"; //Output: 0;
 
 
-const testCaseToUse = testCase12;
+const testCaseToUse = testCase10;
 
 // Write your code here:
 let leastDistance = 101;
-let currentIndex = 0;
-let targetAnimal;
+let currentPosition = 0;
+let firstCharacterPointer;
 
-if(testCaseToUse[currentIndex] === lion) {
-    targetAnimal = lion;
-} else if(testCaseToUse[currentIndex] === zebra) {
-    targetAnimal = zebra;
+if(testCaseToUse[currentPosition] === lion) {
+    firstCharacterPointer = lion;
+} else if(testCaseToUse[currentPosition] === zebra) {
+    firstCharacterPointer = zebra;
 } else {
-    targetAnimal = space;
+    firstCharacterPointer = space;
 }
 
-let targetAnimalIndex = currentIndex;
+let targetAnimalPosition = currentPosition;
 let currentDistance;
+let currentCharacterPointer;
 
-for(currentIndex = 1; currentIndex < testCaseToUse.length; currentIndex++){
+for(currentPosition = 1; currentPosition < testCaseToUse.length; currentPosition++){
 
-    if(targetAnimal === lion) {
+    currentCharacterPointer = testCaseToUse[currentPosition];
+    if(firstCharacterPointer === lion) {
 
-        if(testCaseToUse[currentIndex] === zebra) {
-            currentDistance = currentIndex - targetAnimalIndex - 1;
+        if(currentCharacterPointer === zebra) {
+
+            currentDistance = currentPosition - targetAnimalPosition - 1;
             leastDistance = leastDistance > currentDistance ? currentDistance : leastDistance;
-            targetAnimal = zebra;
-            targetAnimalIndex = currentIndex;            
-        } else if(testCaseToUse[currentIndex] === lion) {
-            targetAnimalIndex = currentIndex;
+            firstCharacterPointer = zebra;
+            targetAnimalPosition = currentPosition;            
+        } else if(currentCharacterPointer === lion) {
+
+            targetAnimalPosition = currentPosition;
         }
-    } else if(targetAnimal === zebra){
+    } else if(firstCharacterPointer === zebra){
 
-        if(testCaseToUse[currentIndex] === lion) {
-            currentDistance = currentIndex - targetAnimalIndex - 1;
+        if(currentCharacterPointer === lion) {
+
+            currentDistance = currentPosition - targetAnimalPosition - 1;
             leastDistance = leastDistance > currentDistance ? currentDistance : leastDistance;
-            targetAnimal = lion;
-            targetAnimalIndex = currentIndex;
-        } else if(testCaseToUse[currentIndex] === zebra) {
-            targetAnimalIndex = currentIndex;
+            firstCharacterPointer = lion;
+            targetAnimalPosition = currentPosition;
+        } else if(currentCharacterPointer === zebra) {
+
+            targetAnimalPosition = currentPosition;
         }
     } else {
 
-        targetAnimal = testCaseToUse[currentIndex] !== " " ? testCaseToUse[currentIndex] === lion ? lion : zebra : space;
-        targetAnimalIndex = currentIndex;
+        firstCharacterPointer = currentCharacterPointer !== " " ? currentCharacterPointer === lion ? lion : zebra : space;
+        targetAnimalPosition = currentPosition;
     }
 }
-
 
 const output = leastDistance === 101 ? -1 : leastDistance;
 console.log("Input: ", testCaseToUse, "Output:", output);
