@@ -3,33 +3,8 @@ const inputToShow = 13579;
 let inputToUse = inputToShow;
 let output = 0;
 
+
 let rightMostDigit = inputToUse % 10;
-if(rightMostDigit % 2 === 0) {
-    output = output + rightMostDigit;
-}
-
-inputToUse = (inputToUse - (rightMostDigit)) / 10;
-rightMostDigit = inputToUse % 10;
-if(rightMostDigit % 2 === 0) {
-    output = output + rightMostDigit;
-}
-
-inputToUse = (inputToUse - (rightMostDigit)) / 10;
-rightMostDigit = inputToUse % 10;
-if(rightMostDigit % 2 === 0) {
-    output = output + rightMostDigit;
-}
-
-inputToUse = (inputToUse - (rightMostDigit)) / 10;
-rightMostDigit = inputToUse % 10;
-if(rightMostDigit % 2 === 0) {
-
-    output = output + rightMostDigit;
-}
-inputToUse = (inputToUse - (rightMostDigit)) / 10;
-
-
-
 while (inputToUse !== 0) {
     
     rightMostDigit = inputToUse % 10;
