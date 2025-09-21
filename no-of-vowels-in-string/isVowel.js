@@ -1,14 +1,22 @@
-const input = "o";
+const input = "b";
 let output = false;
 
-if(input === "a") {
-    output = true;
-} else if(input === "e") {
-    output = true;
-} else if(input === "i") {
-    output = true;
-} else if(input === "o") {
-    output = true;
+switch (input) {
+    case "a":
+    case "e":
+    case "i":
+    case "o":
+    case "u":
+    case "A":
+    case "E":
+    case "I":
+    case "O":
+    case "U":
+        output = true;
+        break;
+
+    default:
+        break;
 }
 
 console.log("Input:" ,input, "output:",output);
