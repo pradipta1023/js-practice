@@ -1,0 +1,9 @@
+|Input  |Expected Output|
+|"a"    |true           |
+|"f"    |false          |
+|"I"    |true           |
+|"c"    |false          |
+|"o"    |true           |
+|"U"    |true           |
+|"G"    |false          |
+|"e"    |true           |
