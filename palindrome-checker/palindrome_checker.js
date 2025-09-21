@@ -17,5 +17,5 @@ while(startOfString <= endOfString) {
     endOfString = endOfString - 1;
 }
 
-    console.log("Input:",input,", Output:",output);
+console.log("Input:",input,", Output:",output);
 
