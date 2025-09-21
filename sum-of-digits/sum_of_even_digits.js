@@ -1,8 +1,7 @@
-const inputToShow = 634;
+const inputToShow = 296538763;
 
 let inputToUse = inputToShow;
 let output = 0;
-
 
 let rightMostDigit;
 while (inputToUse !== 0) {
