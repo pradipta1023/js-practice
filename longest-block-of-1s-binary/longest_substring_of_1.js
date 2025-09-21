@@ -1,9 +1,10 @@
-const inputToShow = 29;
+const inputToShow = 439;
 
 let binaryNumber = 0;
 let inputToUse = inputToShow;
 let currentBase = 1;
 let remainder;
+
 while(inputToUse !== 0) {
     
     remainder = inputToUse % 2;
@@ -12,55 +13,22 @@ while(inputToUse !== 0) {
     currentBase = currentBase * 10;
 }
 
-
 let binaryNumberToUse = binaryNumber;
 let countOfSimultaneous1s = 0;
-let output;
-let binaryRemainder = binaryNumberToUse % 2;
-if(binaryRemainder === 1) {
-    countOfSimultaneous1s = countOfSimultaneous1s + 1;
-} else {
-    output = output > countOfSimultaneous1s ? output : countOfSimultaneous1s;
-    countOfSimultaneous1s = 0;
-}
-binaryNumberToUse = (binaryNumberToUse - binaryRemainder) / 2;
+let longestSubstringOf1s = -1;
+let binaryRemainder;
 
-binaryRemainder = binaryNumberToUse % 2;
-if(binaryRemainder === 1) {
-    countOfSimultaneous1s = countOfSimultaneous1s + 1;
-} else {
-    output = output > countOfSimultaneous1s ? output : countOfSimultaneous1s;
-    countOfSimultaneous1s = 0;
-}
-binaryNumberToUse = (binaryNumberToUse - binaryRemainder) / 2;
+while(binaryNumberToUse !== 0) {
 
-binaryRemainder = binaryNumberToUse % 2;
-if(binaryRemainder === 1) {
-    countOfSimultaneous1s = countOfSimultaneous1s + 1;
-} else {
-    output = output > countOfSimultaneous1s ? output : countOfSimultaneous1s;
-    countOfSimultaneous1s = 0;
+    binaryRemainder = binaryNumberToUse % 2;
+    if(binaryRemainder === 1) {
+        countOfSimultaneous1s = countOfSimultaneous1s + 1;
+    } else {
+        countOfSimultaneous1s = 0;
+    }
+    longestSubstringOf1s = longestSubstringOf1s > countOfSimultaneous1s ? longestSubstringOf1s : countOfSimultaneous1s;   
+    binaryNumberToUse = (binaryNumberToUse - binaryRemainder) / 10;
 }
-binaryNumberToUse = (binaryNumberToUse - binaryRemainder) / 2;
 
-binaryRemainder = binaryNumberToUse % 2;
-if(binaryRemainder === 1) {
-    countOfSimultaneous1s = countOfSimultaneous1s + 1;
-} else {
-    output = output > countOfSimultaneous1s ? output : countOfSimultaneous1s;
-    countOfSimultaneous1s = 0;
-}
-binaryNumberToUse = (binaryNumberToUse - binaryRemainder) / 2;
-
-binaryRemainder = binaryNumberToUse % 2;
-if(binaryRemainder === 1) {
-    countOfSimultaneous1s = countOfSimultaneous1s + 1;
-} else {
-    output = output > countOfSimultaneous1s ? output : countOfSimultaneous1s;
-    countOfSimultaneous1s = 0;
-}
-binaryNumberToUse = (binaryNumberToUse - binaryRemainder) / 2;
-output = countOfSimultaneous1s;
-    
-    
-console.log("Input:" ,binaryNumber, "Output:",output);
+longestSubstringOf1s = longestSubstringOf1s === -1 ? "No 1s found at all" : longestSubstringOf1s;
+console.log("Input:" ,inputToShow ,"Binary:",binaryNumber, "Output:",longestSubstringOf1s);
