@@ -1,21 +1,15 @@
-const inputToShow = 13;
+const inputToShow = 7;
 let output = 0;
 let inputToUse = inputToShow;
 
 
-output = output + (inputToUse % 2) * 10;
-inputToUse = (inputToUse - (inputToUse % 2)) / 2;
-
-output = output + (inputToUse % 2) * 100;
-inputToUse = (inputToUse - (inputToUse % 2)) / 2;
-
-output = output + (inputToUse % 2) * 1000;
-inputToUse = (inputToUse - (inputToUse % 2)) / 2;
-
-output = output + (inputToUse % 2) * 10000;
-inputToUse = (inputToUse - (inputToUse % 2)) / 2;
-
-output = output + (inputToUse % 2) * 10000;
-inputToUse = (inputToUse - (inputToUse % 2)) / 2;
-
+let currentBase = 1;
+let remainder;
+while(inputToUse !== 0) {
+    
+    remainder = inputToUse % 2;
+    output = output + remainder * currentBase;
+    inputToUse = (inputToUse - remainder) / 2;
+    currentBase = currentBase * 10;
+}
 console.log("Input:" ,inputToShow, "Output:",output);
