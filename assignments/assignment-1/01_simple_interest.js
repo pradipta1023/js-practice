@@ -4,12 +4,17 @@ function calculateSimpleInterest(p, t, r) {
 }
 
 function composedMessage(p, t, r, actualResult) {
-  return "Principle:" + p + "\nTime:" + t + "\nRate of interest:" + r + "\nSimple interest:" + actualResult;
+  const principalMessage ="Principal:" + p;
+  const timeMessage = "\nTime:" + t;
+  const rateMessage ="\nRate of interest:" + r; 
+  const resultMessage = "\nCompound interest:" + actualResult
+  return principalMessage  + timeMessage +  rateMessage + resultMessage;
 }
 
 function generateFailOrPass(isSameResult, fragmentedMessage, expectedResult) {
-  const failedCase = "❌\n" + fragmentedMessage + "\nExpected Interest:" + expectedResult;
-  const passedCase = "✅\n" + fragmentedMessage + "\nExpected Interest:" + expectedResult;
+  const expectation = "\nExpected Interest:" + expectedResult;
+  const failedCase = "❌\n" + fragmentedMessage + expectation;
+  const passedCase = "✅\n" + fragmentedMessage + expectation;
 
   if(isSameResult) {
     return passedCase;
