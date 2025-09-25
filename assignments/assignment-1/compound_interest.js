@@ -29,8 +29,8 @@ function isApproximatelyEqual(x, y) {
 
 function generateFailOrPass(isSameResult, fragmentedMessage, expectedResult) {
   const expectation = "\nExpected Interest:" + expectedResult;
-  const failedCase = "❌\n" + fragmentedMessage + expectation;
-  const passedCase = "✅\n" + fragmentedMessage + expectation;
+  const failedCase = "Incorrect -->❌\n" + fragmentedMessage + expectation;
+  const passedCase = "Correct -->✅\n" + fragmentedMessage + expectation;
 
   if(isSameResult) {
     return passedCase;
