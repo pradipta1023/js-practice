@@ -4,6 +4,10 @@ const bgGreen = (text) => {
   return "\x1B[42m" + text + "\x1B[0m";
 };
 
+const bgRed = (text) => {
+  return "\x1B[41m" + text + "\x1B[0m";
+};
+
 const shopItems = {
   apple: 120,
   orange: 50,
@@ -54,9 +58,10 @@ const takePrompt = () => {
 };
 
 const apologyLog = (key) => {
-  console.log(
-    `\n Sorry! currently ${key} is not available. Please visit later for this.\n`,
+  const apoLogyMessage = bgRed(
+    `Sorry! currently ${key} is not available. Please visit later for this.`,
   );
+  console.log(`\n ${apoLogyMessage}\n`);
 };
 
 const shoper = () => {
