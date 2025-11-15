@@ -1,10 +1,4 @@
-import * as operations from "./code.js";
-
-const testDetails = {};
-// description: "",
-// data: ,
-// function: ,
-// expected: ,
+import { tests } from "./data.js";
 
 function areDeepEqual(actual, expected, index) {
   if (!Array.isArray(actual)) {
@@ -22,32 +16,28 @@ function areDeepEqual(actual, expected, index) {
   return areDeepEqual(actual, expected, index + 1);
 }
 
-const expectation = () => {
-  return "\n\t|Expected output : " + testDetails.expected;
+const expectation = (expected) => {
+  return "\n\t|Expected output : " + expected;
 };
 
-const fragmentMsg = (actual) => {
-  return composedMessage(testDetails.data, actual);
+const failedEmojiMessage = (desc) => {
+  return `----------\n❌ ${desc}\n`;
 };
 
-const failedEmojiMessage = () => {
-  return `----------\n❌ ${testDetails.description}\n`;
+const failedMessage = (actual, testDetails) => {
+  return failedEmojiMessage(testDetails.description) +
+    composedMessage(testDetails.input, actual) +
+    expectation(testDetails.expected);
 };
 
-const failedMessage = (actual) => {
-  return failedEmojiMessage() + fragmentMsg(actual) + expectation();
-};
-
-function hasSucceeded(isSame, actual) {
-  if (!isSame) {
-    return failedMessage(actual);
-  }
-
-  return successMessage();
+function hasSucceeded(areSameResults, actual, testDetails) {
+  return areSameResults
+    ? successMessage(testDetails.description)
+    : failedMessage(actual, testDetails);
 }
 
-function successMessage() {
-  return `✅ ${testDetails.description}`;
+function successMessage(desc) {
+  return `✅ ${desc}`;
 }
 
 function composedMessage(input, output) {
@@ -61,38 +51,23 @@ function composedMessage(input, output) {
 //   return x;
 // };
 
-const test = () => {
-  const actual = testDetails.function(testDetails.data);
-  const isSame = areDeepEqual(actual, testDetails.expected);
-  const message = hasSucceeded(isSame);
+const test = (testDetails) => {
+  const actual = testDetails.function(testDetails.input);
+  const areSameResults = areDeepEqual(actual, testDetails.expected);
+  const message = hasSucceeded(
+    areSameResults,
+    actual,
+    testDetails,
+  );
   return message;
 };
 
-const setTestFunc = (desc, data, expected, testFunction) => {
-  testDetails.description = desc;
-  testDetails.data = data;
-  testDetails.function = testFunction;
-  testDetails.expected = expected;
-};
-
-const testSumOf = () => {
-  setTestFunc("simple sum test", [2, 3], 5, operations.sumOf);
-  console.log(test());
-  setTestFunc("empty check", [], 0, operations.sumOf);
-  console.log(test());
-};
-
-const testMultiplicationOf = () => {
-  const multiplicationOf = operations.multiplicationOf;
-  setTestFunc("simple multiplication test", [2, 30], 60, multiplicationOf);
-  console.log(test());
-  setTestFunc("empty check", [], 1, multiplicationOf);
-  console.log(test());
+const testAll = () => {
+  tests.map((testDetails) => console.log(test(testDetails)));
 };
 
 const main = () => {
-  testSumOf();
-  testMultiplicationOf();
+  testAll();
 };
 
 main();
