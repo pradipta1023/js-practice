@@ -1,0 +1,5 @@
+{
+  "imports": {
+    "@sauber/table": "jsr:@sauber/table@^0.1.0"
+  }
+}

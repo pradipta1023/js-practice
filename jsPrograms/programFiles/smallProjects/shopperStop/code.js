@@ -27,6 +27,13 @@ const itemsLeft = {
   banana: 24,
 };
 
+const icons = {
+  apple: "🍎",
+  orange: "🍊",
+  mango: "🥭",
+  banana: "🍌",
+};
+
 let cart = {};
 
 let currentTime;
@@ -94,10 +101,11 @@ const getBill = () => {
 };
 
 const showShopItems = () => {
+  const items = Object.keys(shopItems).map((item) =>
+    ` |  ${icons[item]}  |\t${shopItems[item]}\t|`
+  ).join("\n");
   console.log("\n");
-  console.log(" ", shopItems);
-  console.log(`\n  ${bgGreen("Remaining Items")}\n`);
-  console.log(" ", itemsLeft);
+  console.log(items + "\n");
 };
 
 const takePrompt = () => {
@@ -158,7 +166,11 @@ const shoper = () => {
 
 const showStock = () => {
   console.log(` ${"-".repeat(15)} ITEMS IN STOCK ${"-".repeat(15)}\n`);
-  console.log(" ", itemsLeft, "\n");
+  const items = Object.entries(itemsLeft)
+    .map(([item, value]) => ` |  ${icons[item]}  |\t${value}\t|`)
+    .join("\n");
+  console.log("\n");
+  console.log(items + "\n");
 };
 
 const reStock = ([item, quantity, price]) => {
@@ -185,7 +197,6 @@ const isClosingTime = () => {
 const shop = () => {
   while (true) {
     if (isClosingTime()) return;
-
     showStock();
 
     const shopKeeperInput = prompt(

@@ -1,0 +1,16 @@
+{
+  "version": "5",
+  "specifiers": {
+    "jsr:@sauber/table@0.1": "0.1.0"
+  },
+  "jsr": {
+    "@sauber/table@0.1.0": {
+      "integrity": "528a02e0023c9e4aa00e438bebd9224263e718fac35fe833bc80b937e3d5ae65"
+    }
+  },
+  "workspace": {
+    "dependencies": [
+      "jsr:@sauber/table@0.1"
+    ]
+  }
+}
