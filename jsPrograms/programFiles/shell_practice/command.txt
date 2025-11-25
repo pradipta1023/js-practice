@@ -1,0 +1,119 @@
+wc -> 
+wc -c Count chars
+wc -l Count lines
+wc -w Count words
+wc -L gives the line whose char count is maximum in the file
+wc gives all kinds of count
+
+
+head ->
+head -c "n" stdout n chars from the first of its stdin
+head -n "n" Stdout n lines from its stdin
+
+
+tail ->
+tail -b "n" stdout n chars form last of its stdin
+tail -n "n" stdout n lines from from last of its stdin
+tail -f Waits till last when input comes. It acts like deno --watch
+
+sort ->
+sort -c Checks if the given stdin or file is in sorted manner or not
+sort -o "somefile.txt" print the output to the output file "somefile.txt"
+sort -u Stdout only the unique things after sorting
+sort -r Sort in reverse order
+sort -R Sort in random order
+sort -t It is used to separate the string based on a certain string. Default is \0
+
+
+sleep -> "time in second" -> Sleeps till the time
+
+
+yes -> "word" | Prints "word" for infinite time default is "y"
+
+
+seq ->
+seq -f "%.2f" Handles decimals for floating point numbers default is "%g" can take "%f" as well
+seq -f "%03g" Handles 0s for general numbers default is "0" is to pad with "3" is for no of times "g" means general number
+seq -s "," Uses the given string to separate numbers of a sequence
+seq -t "" Uses the given string to terminate the sequence of numbers
+seq -w Adds 0s in front to equalize the width of all numbers
+
+
+uniq ->
+uniq -c Gives no. of times each entry has occured with that entry separated by space
+uniq -d If some string repeats for more than once sequentially then it'll show only one string
+uniq -D same as -d but it shows the values as it is same as the number of times it occured
+uniq -f It's kinda same as -d only difference is it takes an argument to skip that much string from front before it starts comparing 
+uniq -i It's kinda similar to -d only difference is it checks regardless of cases
+uniq -u Gives the values whose frequency is 1 in the file
+
+
+less -> Less allows us to read by scrolling. First it shows a certain amount of string from that file then we have to scroll and see the other contents. We have to press q to quit from less
+
+
+nl ->
+nl -b To number lines based on certain input
+      a -> To give numbering on each line starts from 1
+      t -> To give numbering only in the non-empty lines
+      n -> To give no line numbering
+
+nl -i It specifies the increment value for numbering each lines
+nl -l Takes number of empty lines for numbering with a line number
+nl -v Takes the starting number to start the counting for numbering lines
+
+
+kill -> It is used to kill a process in various ways
+1       HUP (hang up)
+2       INT (interrupt)
+3       QUIT (quit)
+6       ABRT (abort)
+9       KILL (non-catchable, non-ignorable kill)
+14      ALRM (alarm clock)
+15      TERM (software termination signal)
+
+
+cut -> 
+cut -d "," It is used to cut or split based on a specific string. here it's ","
+cut -b 1-5 It is used to cut bytes from a string. Here it's 1-5
+cut -w It uses whitespaces to cut or split between strings
+cut [-d or -w] -f 1-n to see the output
+
+
+grep -> It works line by line. Basically filter lines based on string
+grep '^': start of the line followed by some string given after it
+```
+grep "^P" 
+output:
+Pradip
+Pradip
+hello
+please 
+```     
+
+grep '$': any strings followed by end of line
+```
+grep "a$"
+output:
+India
+India
+hello
+```
+
+".": It matches with any one character
+```
+grep "^.$"
+output: -> checks only one character
+a
+a
+ab
+```
+
+"*": 0 or more occurence of the previous character of "*"
+
+"+": 1 or more occurence of the previous character of "+"
+
+"-": - is a cool thing. Which works as operator when we put it between two chars. If not then works as normal character
+
+[]: It is used to specify bunch of characters together to match To
+
+"?": Maximum 1 occurence of the previous character of "?" (0 or 1)

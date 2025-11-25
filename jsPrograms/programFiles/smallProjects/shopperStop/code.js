@@ -1,3 +1,5 @@
+import { Table } from "@sauber/table";
+
 const validChoices = [
   "apple",
   "orange",
@@ -105,6 +107,8 @@ const showShopItems = () => {
     ` |  ${icons[item]}  |\t${shopItems[item]}\t|`
   ).join("\n");
   console.log("\n");
+  console.log(" | Items|\tPrice\t|");
+  console.log("", "-".repeat(24));
   console.log(items + "\n");
 };
 
@@ -165,12 +169,20 @@ const shoper = () => {
 };
 
 const showStock = () => {
-  console.log(` ${"-".repeat(15)} ITEMS IN STOCK ${"-".repeat(15)}\n`);
-  const items = Object.entries(itemsLeft)
-    .map(([item, value]) => ` |  ${icons[item]}  |\t${value}\t|`)
-    .join("\n");
-  console.log("\n");
-  console.log(items + "\n");
+  // console.log(` ${"-".repeat(15)} ITEMS IN STOCK ${"-".repeat(15)}\n`);
+  // const items = Object.entries(itemsLeft)
+  //   .map(([item, value]) => ` |  ${icons[item]}  |\t${value}\t|`)
+  //   .join("\n");
+  // console.log("\n");
+  // console.log(" | Items|   Items Left  |");
+  // console.log("", "-".repeat(24));
+  // console.log(items + "\n");
+
+  const t = new Table();
+  t.theme = Table.roundTheme;
+  t.headers = ["Items", "Items Left"];
+  t.rows = Object.entries(icons).map(([name, icon]) => [icon, itemsLeft[name]]);
+  console.log(t.toString());
 };
 
 const reStock = ([item, quantity, price]) => {

@@ -1,0 +1,5 @@
+cat 1 5 
+CAT 2 4
+head 3 5 
+head 6 2 
+head 5 1

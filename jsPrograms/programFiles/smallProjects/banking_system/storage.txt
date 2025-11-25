@@ -1,0 +1,2 @@
+=
+name=samiran gharami;contact=9813324567;hashedPassword=pradipta~%#;balance=1;accountNumber=5941992625;hasLoan=false;loanAmount=0;transaction=
