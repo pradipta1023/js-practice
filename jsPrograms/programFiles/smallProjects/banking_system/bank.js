@@ -11,19 +11,6 @@ const isValidChoice = (choice, validChoice) => {
   return validChoice.includes(choice.toLowerCase());
 };
 
-const start = () => {
-  const storedAccounts = Deno.readTextFileSync("./storage.txt");
-  const listOfAccount = storedAccounts.split("\n");
-
-  for (const account of listOfAccount) {
-    const parsedAccount = parse(account);
-    if (!parsedAccount) {
-      accounts.push(parsedAccount);
-    }
-  }
-  console.log(accounts.flatMap((account) => account));
-};
-
 const messages = [
   "\n    Enter your name:",
   "    Enter your mobile number:",
@@ -67,7 +54,7 @@ const defaultDetails = (account) => {
   account.accountNumber = generateAccountNumber();
   account.hasLoan = false;
   account.loanAmount = 0;
-  account.transaction = [];
+  account.transactions = [];
 
   return account;
 };
@@ -179,12 +166,42 @@ const amountDeposit = () => {
   return parseInt(amountToDeposit);
 };
 
+const currentDate = () => {
+  const date = new Date();
+  return date.toDateString();
+};
+
+const currentTime = () => {
+  const date = new Date();
+  return date.toTimeString().slice(0, 8);
+};
+
+const depositDetails = (amount, account) => {
+  return {
+    deposit: amount,
+    currentBalance: account.balance,
+    date: currentDate(),
+    time: currentTime(),
+  };
+};
+
+const removeEmptyStringFromStart = (account) => {
+  if (account.transactions[0] === "") {
+    account.transactions = account.transactions.slice(1);
+  }
+};
+
+const depositTasks = (account, amount) => {
+  account.transactions.push(depositDetails(amount, account));
+  removeEmptyStringFromStart(account);
+  console.log(`\n    Updated balance -> ₹${account.balance}`);
+};
+
 const depositMoney = (account) => {
   const amount = amountDeposit();
   account.balance += amount;
-  const transaction = { deposit: amount, currentBalance: account.balance };
-  account.transaction.push(transaction);
-  console.log(`\n    Updated balance -> ₹${account.balance}`);
+
+  depositTasks(account, amount);
 };
 
 const matchPassword = (hashedPassword, password) => {
@@ -207,21 +224,34 @@ const isInsufficientBalance = (balance, money) => {
   return isInsufficient;
 };
 
+const withdrawDetails = (account, moneyToWithdraw) => {
+  return {
+    withdraw: moneyToWithdraw,
+    currentBalance: account.balance,
+    date: currentDate(),
+    time: currentTime(),
+  };
+};
+
+const withdrawTasks = (account, moneyToWithdraw) => {
+  account.balance -= moneyToWithdraw;
+  account.transactions.push(withdrawDetails(account, moneyToWithdraw));
+  removeEmptyStringFromStart(account);
+  console.log(`\n    Updated balance ->  ₹${account.balance}`);
+};
+
 const withdrawMoney = (account) => {
   const moneyToWithdraw = withdraw();
   const password = prompt("\n    Please enter password to withdraw:");
 
-  if (matchPassword(account.hashedPassword, password)) {
+  const isError = matchPassword(account.hashedPassword, password) ||
+    isInsufficientBalance(account.balance, moneyToWithdraw);
+
+  if (isError) {
     return;
   }
 
-  if (isInsufficientBalance(account.balance, moneyToWithdraw)) {
-    return;
-  }
-
-  account.balance -= moneyToWithdraw;
-  transaction = { withdraw: moneyToWithdraw, currentBalance: account.balance };
-  console.log(`\n    Updated balance ->  ₹${account.balance}`);
+  withdrawTasks(account, moneyToWithdraw);
 };
 
 const areSamePasswords = (hashedPassword, password) => {
@@ -261,7 +291,36 @@ const receiverDetails = () => {
   return details;
 };
 
-const transfer = (amount) => {
+const senderTransaction = (amount, account, receiverAccount) => {
+  const transactionDetailsForSender = {
+    transfer: amount,
+    currentBalance: account.balance - amount,
+    to: receiverAccount.accountNumber,
+    date: currentDate(),
+    time: currentTime(),
+  };
+
+  account.transactions.push(transactionDetailsForSender);
+};
+
+const receiverTransaction = (amount, receiverAccount, account) => {
+  const transactionDetailsForReceiver = {
+    received: amount,
+    currentBalance: receiverAccount.balance,
+    from: account.accountNumber,
+    date: currentDate(),
+    time: currentTime(),
+  };
+
+  receiverAccount.transactions.push(transactionDetailsForReceiver);
+};
+
+const setTransactions = (amount, account, receiverAccount) => {
+  senderTransaction(amount, account, receiverAccount);
+  receiverTransaction(amount, receiverAccount, account);
+};
+
+const transfer = (amount, account) => {
   const [name, accountNumber] = receiverDetails();
   const detailsOfReceiver = { name, accountNumber };
 
@@ -275,7 +334,11 @@ const transfer = (amount) => {
   if (!receiverAccount) {
     return false;
   }
+
   receiverAccount.balance += amount;
+  setTransactions(amount, account, receiverAccount);
+  removeEmptyStringFromStart(account);
+  removeEmptyStringFromStart(receiverAccount);
 
   console.log(`    Successfully transfered ₹${amount}`);
   return true;
@@ -285,15 +348,14 @@ const moneyTransfer = (account) => {
   const amountToTransfer = withdraw();
   const password = prompt("\n    Please enter password to transfer:");
 
-  if (matchPassword(account.hashedPassword, password)) {
+  const isError = matchPassword(account.hashedPassword, password) ||
+    isInsufficientBalance(account.balance, moneyToWithdraw);
+
+  if (isError) {
     return;
   }
 
-  if (isInsufficientBalance(account.balance, amountToTransfer)) {
-    return;
-  }
-
-  if (!transfer(amountToTransfer)) {
+  if (!transfer(amountToTransfer, account)) {
     console.log("    receiver not found!!");
     return;
   }
@@ -307,13 +369,20 @@ const loan = () => {
   console.log("Loan feature will be available soon");
 };
 
+const transactions = (account) => {
+  if (account.transactions.length === 1) {
+    "No transactions yet";
+  }
+  console.log(account.transactions.slice(0));
+};
+
 const processRequest = (account) => {
   while (true) {
     const choice = prompt(
-      "\n 1. Deposit\n 2. Withdraw\n 3. Transfer\n 4. Loan\n 5. Check balance\n 6. Exit",
+      "\n 1. Deposit\n 2. Withdraw\n 3. Transfer\n 4. Loan\n 5. Check balance\n 6. Transactions\n 7. Exit",
     );
 
-    if (choiceValidation(choice, "123456")) return processRequest();
+    if (choiceValidation(choice, "01234567")) return processRequest();
 
     const operations = {
       "1": () => depositMoney(account),
@@ -321,9 +390,10 @@ const processRequest = (account) => {
       "3": () => moneyTransfer(account),
       "4": () => loan(),
       "5": () => console.log(balanceEnquiry(account)),
+      "6": () => transactions(account),
     };
 
-    if (choice === "6") return;
+    if (choice === "7") return;
 
     operations[choice]();
   }
@@ -352,7 +422,8 @@ const existingAccount = () => {
 const close = () => {
   const stringified = stringify(accounts);
   Deno.writeTextFileSync("./storage.txt", stringified);
-  console.log("closing...");
+  console.log("Bank has been closed");
+  return;
 };
 
 const choiceValidation = (choice, validChoice) => {
@@ -377,6 +448,8 @@ const manageCustomerInput = () => {
 
     if (choiceValidation(choice, "123")) return manageCustomerInput();
 
+    if (choice === "3") return;
+
     const manageCustomer = {
       "1": () => {
         accounts.push(createAccount());
@@ -384,10 +457,6 @@ const manageCustomerInput = () => {
         Deno.writeTextFileSync("./storage.txt", stringified);
       },
       "2": () => existingAccount(),
-      "3": () => {
-        console.log("Exiting...");
-        return;
-      },
     };
 
     manageCustomer[choice]();
@@ -407,30 +476,30 @@ const open = () => {
     manager: manager,
   };
 
-  return user[choice.toLowerCase()]();
+  user[choice.toLowerCase()]();
 };
 
 const manageBank = () => {
-  const choice = prompt(
-    " 1. Open bank\n 2. Close Bank\n    Enter your choice:",
-  );
-  if (choiceValidation(choice, "12")) {
-    return manageBank();
+  while (true) {
+    const choice = prompt(
+      " 1. Open bank\n 2. Close Bank\n    Enter your choice:",
+    );
+    if (choiceValidation(choice, "12")) {
+      return manageBank();
+    }
+
+    if (choice === "2") {
+      return close();
+    }
+
+    open();
   }
-
-  const openClose = {
-    "1": open,
-    "2": close,
-  };
-
-  return openClose[choice]();
 };
 
 const main = () => {
   const storedAccounts = Deno.readTextFileSync("./storage.txt");
   const parsedAccounts = parse(storedAccounts);
   accounts = parsedAccounts;
-
   manageBank();
 };
 

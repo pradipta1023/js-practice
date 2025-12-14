@@ -1,0 +1,3 @@
+learning grep is surprisingly fun.
+
+command: grep -o "[0-9]\+,[^_]*" text.txt | sort -t, -nk1 | cut -d, -f2-

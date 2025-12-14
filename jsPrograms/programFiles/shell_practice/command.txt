@@ -75,6 +75,7 @@ kill -> It is used to kill a process in various ways
 cut -> 
 cut -d "," It is used to cut or split based on a specific string. here it's ","
 cut -b 1-5 It is used to cut bytes from a string. Here it's 1-5
+cut -c1 It is used to specify character positions in a string. Here it is first character
 cut -w It uses whitespaces to cut or split between strings
 cut [-d or -w] -f 1-n to see the output
 
@@ -117,3 +118,107 @@ ab
 []: It is used to specify bunch of characters together to match To
 
 "?": Maximum 1 occurence of the previous character of "?" (0 or 1)
+"\": It is used to specify a special character as a normal character in a string
+
+```
+grep "a\?"
+Exp: For this it will check every byte in the string about the occurence of a
+output:
+a
+a
+aaaa
+aaaa
+aba
+aba
+bbb
+bbb
+```
+
+grep -o Gives only matched string as output
+grep -w Checks if the given string is an independent word of a sentence. It can be a single word as well.
+grep -F Treats the whole pattern as a normal string.
+```
+grep -F "a.\+a"
+output:
+a 
+aa
+a.\+a
+a.\+a
+```
+```
+grep "^[1-9][1-9][02468]$"
+```
+
+[0-9] : Can be written as \d
+\s : It means all whitespace characters
+\S : It means all non whitespaces characters
+
+tr: Translates a character with another character
+tr -C 'string1' 'string2' Whatever contains string1 other than that anything will be converted into string2
+```
+tr -C 'ab' 'p'
+output: 
+abcd
+abppp
+```
+tr -c 'string1' 'string2' same as -C but it can only work on a single character
+```
+tr -c 'a' 'p'
+output:
+pradipta
+ppappppap
+abcd
+apppp
+```
+tr -d 'string' Deletes the given character from input
+```
+tr -d 'a'
+output:
+Pradpita         
+Prdpit
+aaabcda   
+bcd
+```
+tr -s 'string' It squeezes the given character to a single one.
+```
+tr -s 'a'
+output:
+pradipta
+pradipta
+aaaaaaaa
+a
+```
+
+grep Capture:
+      \(\) -> To declare a Capture
+
+```
+Description: starts and ends with the same string separated by " : " `space colon space`
+\1$: It is used to specify the capture number. Here it is first capture
+
+grep "^\(\w*\) : \1$"
+output:
+hello
+hello hello
+hello : hello
+hello : hello
+```
+
+```
+Description: start of the line followed by 0 or more alpha-numeric characters followed by " : " followed by 0 or more numeric characters.
+\1 \2$: It says the first capture followed by space followed by second capture followed by end of line
+
+grep "^\(\w*\) : \(\d*\) \1 \2$"
+hello : 123 hello 123
+hello : 123 hello 123
+hello 123 hello 123
+```
+
+```
+Description: Captures two things then both have to occur exactly twice in a row
+\{\}: It is used to specify the number of times one capture should appear
+
+grep "^\(\w*\) : \(\d*\) \1\{2\} \2\{2\}$"
+hello : 123 hellohello 123123
+hello : 123 hellohello 123123
+```

@@ -1,0 +1,102 @@
+Which equality operator checks BOTH value and type?;===;JS-Basics
+Result of: 3 + "3";"33";JS-Ops
+Result of: 3 - "3";0;JS-Ops
+Result of: true + 1;2;JS-Ops
+Is NaN equal to NaN?;No (False);JS-Ops
+Type of null?;'object';JS-Ops
+Type of undefined?;'undefined';JS-Ops
+Type of [];'object';JS-Ops
+Is [] truthy or falsy?;Truthy;JS-Conditionals
+Is "" (empty string) truthy or falsy?;Falsy;JS-Conditionals
+Is 0 truthy or falsy?;Falsy;JS-Conditionals
+Ternary syntax for: if(a) x else y;a ? x : y;JS-Conditionals
+Keyword to STOP a switch case falling through?;break;JS-Conditionals
+Keyword to skip CURRENT loop iteration?;continue;JS-Loops
+Keyword to STOP the loop entirely?;break;JS-Loops
+Loop best for iterating Array VALUES?;for...of;JS-Loops
+Loop best for iterating Object KEYS?;for...in;JS-Loops
+Function Declaration: Hoisted or Not?;Hoisted;JS-Functions
+Function Expression: Hoisted or Not?;Not Hoisted;JS-Functions
+Does an Arrow function have its own 'this'?;No;JS-Arrow
+Does an Arrow function have the 'arguments' object?;No;JS-Arrow
+Arrow syntax for implicit return (one line)?;const f = x => x * 2;JS-Arrow
+Returns of: () => { 5 };;undefined (missing return keyword);JS-Arrow
+Array method to ADD to END?;push();JS-Arrays
+Array method to REMOVE from END?;pop();JS-Arrays
+Array method to ADD to START?;unshift();JS-Arrays
+Array method to REMOVE from START?;shift();JS-Arrays
+Does map() modify the original array?;No;JS-Arrays
+Does sort() modify the original array?;Yes;JS-Arrays
+Does push() modify the original array?;Yes;JS-Arrays
+Return value of push()?;The new length;JS-Arrays
+Return value of pop()?;The removed element;JS-Arrays
+Return value of map()?;A new array;JS-MapFilter
+Return value of forEach()?;undefined;JS-MapFilter
+Return value of filter()?;A new array (subset);JS-MapFilter
+Return value of reduce()?;A single value;JS-MapFilter
+Best method to transform every item in an array?;map();JS-MapFilter
+Best method to pick specific items from an array?;filter();JS-MapFilter
+Best method to sum an array of numbers?;reduce();JS-MapFilter
+Function used to get Object keys?;Object.keys(obj);JS-Objects
+Function used to get Object values?;Object.values(obj);JS-Objects
+Check if property 'x' exists in obj?;'x' in obj;JS-Objects
+Access property 'a-b' in obj?;obj['a-b'];JS-Objects
+Syntax to spread array elements?;...array;JS-Syntax
+Syntax to gather remaining arguments?;...args (Rest parameter);JS-Syntax
+Keyword to define a Generator?;function*;JS-Generators
+Keyword to pause a Generator?;yield;JS-Generators
+Method to resume a Generator?;gen.next();JS-Generators
+Object returned by gen.next()?;{ value: ..., done: ... };JS-Generators
+Browser function for text input?;prompt();JS-IO
+Browser function for logging?;console.log();JS-IO
+Browser function that converts input to string?;prompt() (Always returns string);JS-IO
+Does 'call' execute immediately?;Yes;JS-CallBind
+Does 'bind' execute immediately?;No (Returns new function);JS-CallBind
+Difference between call and apply inputs?;call: comma args / apply: array args;JS-CallBind
+Method to borrow a method from another object?;call() or apply();JS-CallBind
+Result of: typeof NaN;'number';JS-Ops
+Logic operator that returns first TRUE value?;|| (OR);JS-Ops
+Logic operator that returns first FALSE value?;&& (AND);JS-Ops
+Operator for exponentiation (power)?;**;JS-Ops
+Method to turn JSON string into Object?;JSON.parse();JS-JSON
+Method to turn Object into JSON string?;JSON.stringify();JS-JSON
+Which scope does 'var' have?;Function Scope;JS-Scope
+Which scope does 'let' have?;Block Scope;JS-Scope
+Can you reassign a 'const' variable?;No;JS-Scope
+Can you mutate a 'const' object?;Yes;JS-Scope
+Recursion without a base case causes...?;Stack Overflow;JS-Recursion
+Keyword for implicit variable declaration (bad practice)?;None (assigning without keyword);JS-Variables
+Method to create a fixed-this function copy?;bind();JS-CallBind
+How to get length of a String?;str.length;JS-Basics
+Return value of map()?;New Array (same length);JS-MapFilterReduce
+Return value of filter()?;New Array (0 to N length);JS-MapFilterReduce
+Return value of reduce()?;Single value (accumulator);JS-MapFilterReduce
+Does map() mutate the original array?;No;JS-MapFilterReduce
+Does filter() mutate the original array?;No;JS-MapFilterReduce
+Does reduce() mutate the original array?;No;JS-MapFilterReduce
+Output: [1, 2, 3].map(x => x * 2);[2, 4, 6];JS-MapFilterReduce
+Output: [1, 2, 3].filter(x => x > 1);[2, 3];JS-MapFilterReduce
+Output: [1, 2].reduce((acc, n) => acc + n, 0);3;JS-MapFilterReduce
+Where do you put the initial value in reduce()?;As the 2nd argument;JS-MapFilterReduce
+If reduce() has NO initial value, what is the start accumulator?;The first element of the array;JS-MapFilterReduce
+Can you chain map() after reduce()?;No (reduce returns a single value);JS-MapFilterReduce
+Can you chain reduce() after filter()?;Yes;JS-MapFilterReduce
+Best method to flatten an array of arrays?;flat() or reduce();JS-MapFilterReduce
+Best method to check if ALL elements match a condition?;every();JS-MapFilterReduce
+Best method to check if AT LEAST ONE element matches?;some();JS-MapFilterReduce
+What does find() return?;The first matching element (or undefined);JS-MapFilterReduce
+What does findIndex() return?;The index of first match (or -1);JS-MapFilterReduce
+Output: [1, 2, 3].map(() => 0);[0, 0, 0];JS-MapFilterReduce
+Syntax to define a Generator function?;function* name() { ... };JS-Generators
+Keyword used to PAUSE a Generator?;yield;JS-Generators
+Keyword used to delegate to another Generator?;yield*;JS-Generators
+Method to manually advance a Generator?;gen.next();JS-Generators
+What properties does gen.next() return?;value and done;JS-Generators
+Value of 'done' when Generator is finished?;true;JS-Generators
+Can you use 'return' inside a Generator?;Yes (it ends the generator);JS-Generators
+What happens if you call next() on a finished generator?;Returns { value: undefined, done: true };JS-Generators
+Loop type that works automatically with Generators?;for...of;JS-Generators
+What is an Iterable?;An object with a [Symbol.iterator] method;JS-Iterators
+Output: function* g(){ yield 1; } -> g().next().value;1;JS-Generators
+Does a Generator execute immediately when called?;No (it returns a generator object);JS-Generators
+Can a Generator be infinite?;Yes (e.g., while(true) { yield x; });JS-Generators
