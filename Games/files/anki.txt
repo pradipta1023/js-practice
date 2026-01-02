@@ -1,0 +1,8 @@
+India,Delhi
+West Bengal,Kolkata
+Bihar,Patna
+Odisha,Puri
+Karnataka,Bangalore
+Tamil Nadu,Chennai
+Himachal Pradesh,Sikim
+Goa,Panaji

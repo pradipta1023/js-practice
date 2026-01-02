@@ -1,0 +1,6 @@
+Bihar,Patna
+Odisha,Puri
+Karnataka,Bangalore
+Tamil Nadu,Chennai
+Himachal Pradesh,Shimla
+Goa,Panaji
