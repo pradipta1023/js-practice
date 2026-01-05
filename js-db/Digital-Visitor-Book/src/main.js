@@ -42,7 +42,7 @@ const listEntries = async () => {
 };
 
 const listEntriesWithTimes = async () => {
-  const password = promptSecret(" Enter passwor here to check: ");
+  const password = promptSecret(" Enter passwor to check: ");
   if (password !== RESET_PASSWORD) return console.log(" Wrong password");
   try {
     const result = await client
