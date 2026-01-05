@@ -31,7 +31,7 @@ const dateTime = (result) => {
 const listEntries = async () => {
   try {
     const result = await client
-      .queryObject`SELECT entry_id,first_name, last_name, phone_number, room_no, to_meet FROM visitor`;
+      .queryObject`SELECT entry_id,first_name,last_name, phone_number, room_no, to_meet FROM visitor`;
     console.log("<====== Visitors Details ======>");
     for (const row of result.rows) {
       console.table(row);
