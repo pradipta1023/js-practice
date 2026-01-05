@@ -13,7 +13,7 @@ const fillDetails = () => {
 };
 
 const successMsg = (result) => {
-  console.log("Data inserted successfully");
+  console.log(" Data inserted successfully");
   console.table(result.rows);
 };
 
@@ -30,7 +30,7 @@ const createAccount = async () => {
     `;
     successMsg(result);
   } catch (error) {
-    console.log(`An error occured ${error}`);
+    console.log(` An error occured ${error}`);
   } finally {
     await client.end();
   }
@@ -60,7 +60,7 @@ const login = async () => {
     `;
     return result.rows[0];
   } catch (error) {
-    console.log(`An error occured ${error}`);
+    console.log(` An error occured ${error}`);
   } finally {
     await client.end();
   }
@@ -89,10 +89,10 @@ const addTodo = async (userId) => {
     ${todo["user id"]}, ${todo.description})
     RETURNING todo_name, is_active, created_at, user_id
     `;
-    console.log("Todo created");
+    console.log(" Todo created");
     console.table(result.rows);
   } catch (error) {
-    console.log("An error occured", error);
+    console.log(" An error occured", error);
   } finally {
     await client.end();
   }
@@ -113,7 +113,7 @@ const finishTodo = async (userId) => {
       console.table(row);
     }
   } catch (error) {
-    console.log(`An error occured ${error}`);
+    console.log(` An error occured ${error}`);
   } finally {
     await client.end();
   }
@@ -127,7 +127,7 @@ const viewAll = async (userId) => {
     SELECT * FROM todo
     WHERE user_id = ${userId}
     `;
-    if (!(result.rows.length)) return console.log("No active todos to show");
+    if (!(result.rows.length)) return console.log(" No active todos to show");
     for (const row of result.rows) {
       row["created_at"] = row["created_at"].toString();
       row["updated_at"] = row["updated_at"]
@@ -136,7 +136,7 @@ const viewAll = async (userId) => {
       console.table(row);
     }
   } catch (error) {
-    console.log(`An error occured ${error}`);
+    console.log(` An error occured ${error}`);
   } finally {
     await client.end();
   }
@@ -159,7 +159,7 @@ const editName = async (userId, todoId) => {
       : null;
     console.table(result.rows);
   } catch (error) {
-    console.log(`An error occured ${error}`);
+    console.log(` An error occured ${error}`);
   } finally {
     await client.end();
   }
@@ -184,7 +184,7 @@ const editDescription = async (userId, todoId) => {
       console.table(row);
     }
   } catch (error) {
-    console.log(`An error occured ${error}`);
+    console.log(` An error occured ${error}`);
   } finally {
     await client.end();
   }
@@ -211,7 +211,7 @@ const editBoth = async (userId, todoId) => {
       console.table(row);
     }
   } catch (error) {
-    console.log(`An error occured ${error}`);
+    console.log(` An error occured ${error}`);
   } finally {
     await client.end();
   }
@@ -231,10 +231,9 @@ const editTodo = async (userId) => {
 const existingAccount = async () => {
   const user = await login();
   if (!user) {
-    console.log("No account found");
+    console.log(" No account found");
     return;
   }
-  console.log(user["user_id"]);
   while (true) {
     const input = prompt(
       " 1. Add todo \n 2. Finish todo\n 3. Edit todo\n 4. View all\n 5. Exit\n Enter your choice:",
@@ -243,7 +242,7 @@ const existingAccount = async () => {
     if (input === "2") await finishTodo(user["user_id"]);
     if (input === "3") await editTodo(user["user_id"]);
     if (input === "4") await viewAll(user["user_id"]);
-    if (input === "5") return console.log("Thank you for being with us");
+    if (input === "5") return console.log(" Thank you for being with us");
   }
 };
 
