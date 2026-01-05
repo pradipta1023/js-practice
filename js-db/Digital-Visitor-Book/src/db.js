@@ -1,11 +1,13 @@
-import { Client } from "jsr:@db/postgres";
+import { Client } from "@db/postgres";
+import { promptSecret } from "@std/cli";
 
+const password = promptSecret("Enter password: ", { mask: "#" });
 const client = new Client({
   user: "postgres",
   database: "Digital_Visitor_Book",
   hostname: "localhost",
   port: 5432,
-  password: "Pradipta@2005",
+  password: password,
 });
 
 // async function checkConnection() {

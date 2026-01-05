@@ -1,5 +1,9 @@
 {
+  "tasks": {
+    "start": "deno run --watch -A src/main.js"
+  },
   "imports": {
-    "@db/postgres": "jsr:@db/postgres@^0.19.5"
+    "@db/postgres": "jsr:@db/postgres@^0.19.5",
+    "@std/cli": "jsr:@std/cli@^1.0.25"
   }
 }
