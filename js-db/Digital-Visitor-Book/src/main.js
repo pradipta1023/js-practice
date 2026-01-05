@@ -52,8 +52,8 @@ const listEntriesWithTimes = async () => {
     for (const row of resultWithFormattedDate.rows) {
       console.table(row);
     }
-  } catch (error) {
-    console.log("❌ Failed to connect", error);
+  } catch (_error) {
+    console.log("❌ Failed to connect");
   }
 };
 
