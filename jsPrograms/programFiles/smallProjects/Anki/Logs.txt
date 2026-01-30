@@ -1,0 +1,6 @@
+C,printf
+Java,System.out.println
+Js,console.log
+C++,std::cout << << std::endl
+php,echo
+python,print

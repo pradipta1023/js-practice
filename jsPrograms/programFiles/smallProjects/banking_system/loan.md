@@ -1,0 +1,7 @@
+## LOAN
+
+- Structure
+
+```js
+loan: {}
+```
