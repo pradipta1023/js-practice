@@ -1,0 +1,50 @@
+[
+  {
+    "name": "Pradipta Dey",
+    "contact": "6281920293",
+    "password": "1234",
+    "balance": 44000,
+    "accountNumber": "9688530853",
+    "hasLoan": false,
+    "loanAmount": 0,
+    "transactions": [
+      {
+        "deposit": 5000,
+        "currentBalance": 25000,
+        "date": "Sun Feb 01 2026",
+        "time": "21:11:47"
+      },
+      {
+        "withdraw": 1000,
+        "currentBalance": 24000,
+        "date": "Sun Feb 01 2026",
+        "time": "21:11:54"
+      },
+      {
+        "recieved": 20000,
+        "currentBalance": 44000,
+        "from": "9695663032",
+        "date": "Sun Feb 01 2026",
+        "time": "21:14:12"
+      }
+    ]
+  },
+  {
+    "name": "Sonai",
+    "contact": "6281920283",
+    "password": "1234",
+    "balance": 80000,
+    "accountNumber": "9695663032",
+    "hasLoan": false,
+    "loanAmount": 0,
+    "transactions": [
+      {
+        "transfered": 20000,
+        "currentBalance": 80000,
+        "to": "9688530853",
+        "date": "Sun Feb 01 2026",
+        "time": "21:14:12"
+      }
+    ]
+  }
+]
