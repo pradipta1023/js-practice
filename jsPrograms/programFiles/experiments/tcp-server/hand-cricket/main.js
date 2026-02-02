@@ -1,7 +1,7 @@
 import { play } from "./src/Cricket/cricket.js";
 
-const main = () => {
-  play();
+const main = async () => {
+  await play();
 };
 
 main();

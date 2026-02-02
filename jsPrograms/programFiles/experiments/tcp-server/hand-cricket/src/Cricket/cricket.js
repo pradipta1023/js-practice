@@ -1,3 +1,5 @@
+import { select } from "@inquirer/prompts";
+
 import { bgBlue, bgGreen, bgRed, bgYellow, bold } from "../textColors.js";
 
 const DRAW_MATCH = bgYellow("Match has drawn");
@@ -149,15 +151,22 @@ const userBallFirst = () => {
   return decideWinner(userScore, computerScore);
 };
 
-const playToss = () => {
-  const choiceOfToss = +prompt(`Take a call for toss : 
-  1. Heads
-  2. Tails`) - 1;
-
-  if (!CHOICE.includes(choiceOfToss)) {
-    console.log("Invalid choice");
-    return playToss();
-  }
+const playToss = async () => {
+  const choiceOfToss = await select(
+    {
+      message: "Select a choice: ",
+      choices: [
+        {
+          name: "heads",
+          value: 0,
+        },
+        {
+          name: "tails",
+          value: 1,
+        },
+      ],
+    },
+  );
 
   const tossResult = +getTossResult();
   console.log(
@@ -167,8 +176,8 @@ const playToss = () => {
   return choiceOfToss === tossResult ? choiceByUser() : choiceByComputer();
 };
 
-const playMatch = () => {
-  const resultOfToss = playToss();
+const playMatch = async () => {
+  const resultOfToss = await playToss();
   console.log(`\t\t\t\t\t\t\t${bgBlue(bold("TW CRICKET LEAGUE"))}`);
   console.log("\t\t<", "==".repeat(45), ">\n");
 
@@ -180,15 +189,18 @@ const playMatch = () => {
 };
 
 const explainRules = () => {
-  console.log(`RULES: 
-  Choice should be in between 0 to 4 & 6
-  5 will be considered as out while batting
-  ${bgBlue("Good Luck 🤞")}\n`);
+  console.log(
+    `${"*".repeat(50)}\n                   R U L E S \n${"*".repeat(50)}
+  1. Choice should be in between 0 to 4 & 6
+  2. 5 will be considered as out while batting
+${"-".repeat(50)}
+  ${bgBlue("Good Luck 🤞")}\n`,
+  );
 };
 
-export const play = () => {
+export const play = async () => {
   explainRules();
-  console.log(playMatch());
+  console.log(await playMatch());
 
   return confirm("\nWanna play again!") ? play() : "";
 };
