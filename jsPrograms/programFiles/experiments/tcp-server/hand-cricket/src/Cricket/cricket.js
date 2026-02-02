@@ -1,3 +1,5 @@
+import { bgBlue, bgGreen, bgRed, bgYellow, bold } from "../textColors.js";
+
 const DRAW_MATCH = bgYellow("Match has drawn");
 const WIN_MATCH = bgGreen("You've won the match");
 const LOST_MATCH = bgRed("Better luck next time");
@@ -6,44 +8,20 @@ const CHOICE = [0, 1];
 const TOSS = ["Heads", "Tails"];
 const BAT_OR_BALL = ["Bat", "Ball"];
 
-function bgRed(text) {
-  return "\x1B[41m" + text + "\x1B[0m";
-}
-
-function bgGreen(text) {
-  return "\x1B[42m" + text + "\x1B[0m";
-}
-
-function bgYellow(text) {
-  return "\x1B[43m" + text + "\x1B[0m";
-}
-
-function bgBlue(text) {
-  return "\x1B[44m" + text + "\x1B[0m";
-}
-
-function bold(text) {
-  return "\x1B[1m" + text + "\x1B[0m";
-}
-
-// function bgCyan(text) {
-//   return "\x1B[46m" + text + "\x1B[0m";
-// }
-
-function getComputerChoiceInABall() {
+const getComputerChoiceInABall = () => {
   const score = Math.floor(Math.random() * 7);
   return VALID_SCORE.includes(score) ? score : getComputerChoiceInABall();
-}
+};
 
-function getUserChoice() {
+const getUserChoice = () => {
   const choice = prompt(`Enter your choice : `);
   if (choice.includes("x")) {
     return getUserChoice();
   }
   return VALID_SCORE.includes(choice) ? parseInt(choice) : getUserChoice();
-}
+};
 
-function decideWinner(player1Score, player2Score) {
+const decideWinner = (player1Score, player2Score) => {
   console.log(`
 ${"-".repeat(25)}
 |User score     : ${player1Score}\t|
@@ -55,45 +33,45 @@ ${"-".repeat(25)}`);
   const winnerIndex = scoreDifference < 0 ? 2 : scoreDifference > 0 ? 1 : 0;
 
   return winnerDecider[winnerIndex];
-}
+};
 
-function isOut(choices, isBatting, batter) {
+const isOut = (choices, isBatting, batter) => {
   const isInValidUserChoice = !VALID_SCORE.includes(choices[batter]) &&
     isBatting;
   return choices[0] === choices[1] || isInValidUserChoice;
-}
+};
 
-function isChased(target, currentScore) {
+const isChased = (target, currentScore) => {
   return target < currentScore;
-}
+};
 
-function selectBatter(choices, isUser) {
+const selectBatter = (choices, isUser) => {
   return isUser % choices.length;
-}
+};
 
-function outMessage(choices) {
+const outMessage = (choices) => {
   console.log(`${bgRed("Out! \\|/")}\nComputers choice : ${choices[0]}\n`);
-}
+};
 
-function chasedMessage() {
+const chasedMessage = () => {
   console.log("\n" + bgGreen("Chased! 💥💥"));
-}
+};
 
-function runMessage() {
+const runMessage = () => {
   console.log("🏏");
-}
+};
 
-function choiceForCurrentBall() {
+const choiceForCurrentBall = () => {
   return [getComputerChoiceInABall(), getUserChoice()];
-}
+};
 
-function calculateScore(
+const calculateScore = (
   isUser,
   userBatting,
   target = 37,
   score = 0,
   noOfBallsLeft = 6,
-) {
+) => {
   if (noOfBallsLeft === 0) {
     return score;
   }
@@ -120,13 +98,13 @@ function calculateScore(
     latestScore,
     noOfBallsLeft - 1,
   );
-}
+};
 
-function getTossResult() {
+const getTossResult = () => {
   return Math.floor(Math.random() * 2);
-}
+};
 
-function choiceByUser() {
+const choiceByUser = () => {
   const choiceOfBatOrBall = +prompt(`What do you want to choose
   1. Bat
   2. Ball`) - 1;
@@ -135,16 +113,16 @@ function choiceByUser() {
 
   const userChoiceOfPlay = [choiceOfBatOrBall, "U"];
   return CHOICE.includes(choiceOfBatOrBall) ? userChoiceOfPlay : choiceByUser();
-}
+};
 
-function choiceByComputer() {
+const choiceByComputer = () => {
   const choiceOfBatOrBall = Math.floor(Math.random() * 2);
   console.log(`Computer chose to ${BAT_OR_BALL[choiceOfBatOrBall]} first\n`);
 
   return [choiceOfBatOrBall, "C"];
-}
+};
 
-function userBatFirst() {
+const userBatFirst = () => {
   console.log(`${bold("<--------User is batting--------->")}\n`);
 
   const userScore = calculateScore(1, true);
@@ -155,9 +133,9 @@ function userBatFirst() {
   const computerScore = calculateScore(0, false, userScore);
 
   return decideWinner(userScore, computerScore);
-}
+};
 
-function userBallFirst() {
+const userBallFirst = () => {
   console.log(`${bold("<--------Computer is batting--------->")}\n`);
 
   const computerScore = calculateScore(0, false);
@@ -169,9 +147,9 @@ function userBallFirst() {
   const userScore = calculateScore(1, true, computerScore);
 
   return decideWinner(userScore, computerScore);
-}
+};
 
-function playToss() {
+const playToss = () => {
   const choiceOfToss = +prompt(`Take a call for toss : 
   1. Heads
   2. Tails`) - 1;
@@ -187,9 +165,9 @@ function playToss() {
   );
 
   return choiceOfToss === tossResult ? choiceByUser() : choiceByComputer();
-}
+};
 
-function playMatch() {
+const playMatch = () => {
   const resultOfToss = playToss();
   console.log(`\t\t\t\t\t\t\t${bgBlue(bold("TW CRICKET LEAGUE"))}`);
   console.log("\t\t<", "==".repeat(45), ">\n");
@@ -199,24 +177,18 @@ function playMatch() {
   }
 
   return resultOfToss[0] === 0 ? userBallFirst() : userBatFirst();
-}
+};
 
-function explainRules() {
+const explainRules = () => {
   console.log(`RULES: 
   Choice should be in between 0 to 4 & 6
   5 will be considered as out while batting
-  ${bgGreen("Good Luck 🤞")}\n`);
-}
+  ${bgBlue("Good Luck 🤞")}\n`);
+};
 
-function play() {
+export const play = () => {
   explainRules();
   console.log(playMatch());
 
   return confirm("\nWanna play again!") ? play() : "";
-}
-
-function main() {
-  play();
-}
-
-main();
+};
