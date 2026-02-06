@@ -1,5 +1,5 @@
 import { promptSecret } from "jsr:@std/cli";
-import { input } from "@inquirer/prompts";
+import { input, number, password } from "@inquirer/prompts";
 
 const detailsNeeded = ["First name", "Last name"];
 const phNoRegex = /^[6-9]+[0-9]*/;
@@ -43,24 +43,36 @@ export const createAccount = async (client) => {
   }
 };
 
-const getPassword = () => {
-  const password = promptSecret(" Enter your password: ", { mask: "#" });
-  const confirmPassword = promptSecret(" Enter your password: ", { mask: "#" });
-  return password === confirmPassword ? password : getPassword();
+const getPassword = async () => {
+  const pass = await password({
+    message: "Enter your password: ",
+    required: true,
+    mask: true,
+  });
+  const confirmPass = await password({
+    message: "Enter your password: ",
+    required: true,
+    mask: true,
+  });
+  if (pass === confirmPass) {
+    return pass;
+  }
+  return await getPassword();
 };
 
-const getLoginDetails = () => {
+const getLoginDetails = async () => {
   const user = {};
-  user["user id"] = parseInt(prompt(" Fill user id: "));
-  user["password"] = getPassword();
+  user["user id"] = await number({
+    message: " Fill user id: ",
+    required: true,
+  });
+  user["password"] = await getPassword();
   return user;
 };
 
-const login = async () => {
-  const user = getLoginDetails();
+const login = async (client) => {
+  const user = await getLoginDetails();
   try {
-    await client.connect();
-    console.log(" ✅ Connected");
     const result = await client.queryObject`
     SELECT * FROM users
     WHERE user_id = ${user["user id"]} AND password = ${user["password"]}
@@ -68,8 +80,6 @@ const login = async () => {
     return result.rows[0];
   } catch (error) {
     console.log(` An error occured ${error}`);
-  } finally {
-    await client.end();
   }
 };
 
@@ -235,8 +245,8 @@ const editTodo = async (userId) => {
   return;
 };
 
-export const existingAccount = async () => {
-  const user = await login();
+export const existingAccount = async (client) => {
+  const user = await login(client);
   if (!user) {
     console.log(" No account found");
     return;
